@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace SistemaReservas.Domain.Enums
 {
-    public enum RoleEnum
+    public enum PerfilEnum
     {
+        Comum = 1,    
+        Gestor = 2,   
+        Admin = 3     
     }
 }
+

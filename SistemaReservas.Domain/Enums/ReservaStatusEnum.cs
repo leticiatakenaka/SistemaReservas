@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SistemaReservas.Domain.Enums
 {
-    public enum ReservaStatus
+    public enum ReservaStatusEnum
     {
     }
 }

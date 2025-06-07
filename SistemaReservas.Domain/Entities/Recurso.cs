@@ -10,8 +10,8 @@ namespace SistemaReservas.Domain.Entities
     public class Recurso
     {
         public Guid Id { get; set; }
-        public string Nome { get; set; }
+        public required string Nome { get; set; }
         public TipoRecursoEnum Tipo { get; set; } // Sala, Equipamento, Evento
-        public string Localizacao { get; set; }
+        public required string Localizacao { get; set; }
     }
 }

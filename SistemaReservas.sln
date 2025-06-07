@@ -5,7 +5,7 @@ VisualStudioVersion = 17.9.34622.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Domain", "1 - Domain", "{EFBE50EE-F77B-47C6-BBE8-5CCFBB09622C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaReservas.Domain", "SistemaReservas.Domain\SistemaReservas.Domain.csproj", "{D6964108-7115-42A2-B5E1-5E2CA156F654}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SistemaReservas.Domain", "SistemaReservas.Domain\SistemaReservas.Domain.csproj", "{D6964108-7115-42A2-B5E1-5E2CA156F654}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Application", "2 - Application", "{FB3AA4E5-EFC9-4E12-A869-1D98498E0985}"
 EndProject
@@ -17,13 +17,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5 - CrossCutting", "5 - Cro
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6 - Tests", "6 - Tests", "{B8993068-875B-4BE4-84A4-79A26A09276E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaReservas.Application", "SistemaReservas.Application\SistemaReservas.Application.csproj", "{F50DB957-E6DE-4409-9554-87069E2A3CE8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SistemaReservas.Application", "SistemaReservas.Application\SistemaReservas.Application.csproj", "{F50DB957-E6DE-4409-9554-87069E2A3CE8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaReservas.Infra", "SistemaReservas.Infra\SistemaReservas.Infra.csproj", "{F68DE65D-B9B0-4A84-95D0-569E38C7502E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SistemaReservas.Infrastructure", "SistemaReservas.Infra\SistemaReservas.Infrastructure.csproj", "{F68DE65D-B9B0-4A84-95D0-569E38C7502E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaReservas.CrossCutting", "SistemaReservas.CrossCutting\SistemaReservas.CrossCutting.csproj", "{29AB607B-150B-4A32-8F38-73117C710531}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SistemaReservas.CrossCutting", "SistemaReservas.CrossCutting\SistemaReservas.CrossCutting.csproj", "{29AB607B-150B-4A32-8F38-73117C710531}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaReservas.API", "SistemaReservas.API\SistemaReservas.API.csproj", "{B6C52AA0-44BC-424A-BFFD-650E76FFAB82}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SistemaReservas.API", "SistemaReservas.API\SistemaReservas.API.csproj", "{B6C52AA0-44BC-424A-BFFD-650E76FFAB82}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

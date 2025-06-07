@@ -14,6 +14,6 @@ namespace SistemaReservas.Domain.Entities
         public Guid RecursoId { get; set; }
         public DateTime DataInicio { get; set; }
         public DateTime DataFim { get; set; }
-        public ReservaStatus Status { get; set; } // Pendente, Aprovada, Recusada
+        public ReservaStatusEnum Status { get; set; } // Pendente, Aprovada, Recusada
     }
 }
