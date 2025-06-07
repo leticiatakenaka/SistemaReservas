@@ -10,9 +10,11 @@ namespace SistemaReservas.Domain.Entities
     public class Usuario
     {
         public Guid Id { get; set; }
-        public required string Nome { get; set; }
-        public required string Email { get; set; }
-        public required string SenhaHash { get; set; }
-        public RoleEnum Role { get; set; }
+        public string PrimeiroNome { get; set; }
+        public string UltimoNome { get; set; }
+        public string NomeDeUsuario { get; set; }
+        public string Email { get; set; }
+        public int PerfilId { get; set; }
+        public DateTime CriadoEm { get; set; }
     }
 }

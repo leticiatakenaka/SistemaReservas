@@ -1,5 +1,4 @@
 ﻿using SistemaReservas.Application.DTOs;
-using SistemaReservas.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +7,9 @@ using System.Threading.Tasks;
 
 namespace SistemaReservas.Application.Interfaces
 {
-    public interface IUsuarioAppService
+    public interface IAuthAppService
     {
+        Task<string?> LoginAsync(string email, string password);
+        Task<OperationResultDto<string>> RegistrarAsync(RegistrarUsuarioRequest request);
     }
 }

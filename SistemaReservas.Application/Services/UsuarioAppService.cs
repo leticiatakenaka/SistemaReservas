@@ -1,12 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SistemaReservas.Application.DTOs;
+using SistemaReservas.Application.Interfaces;
+using SistemaReservas.Domain.Entities;
+using SistemaReservas.Domain.Interfaces;
 
 namespace SistemaReservas.Application.Services
 {
-    public class UsuarioAppService
+    public class UsuarioAppService : IUsuarioAppService
     {
+        private readonly IUsuarioRepository _usuarioRepository;
+
+        public UsuarioAppService(IUsuarioRepository usuarioRepository)
+        {
+            _usuarioRepository = usuarioRepository;
+        }
     }
 }

@@ -1,12 +1,22 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using SistemaReservas.Domain.Entities;
+using SistemaReservas.Domain.Interfaces;
+using SistemaReservas.Infrastructure.Context;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SistemaReservas.Infra.Repositories
+namespace SistemaReservas.Infrastructure.Repositories
 {
-    public class UsuarioRepository
+    public class UsuarioRepository : IUsuarioRepository
     {
+        private readonly AppDbContext _context;
+
+        public UsuarioRepository(AppDbContext context)
+        {
+            _context = context;
+        }
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SistemaReservas.Infra.Repositories
+namespace SistemaReservas.Infrastructure.Repositories
 {
     public class ReservaRepository
     {
