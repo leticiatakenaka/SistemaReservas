@@ -6,6 +6,5 @@ namespace SistemaReservas.Infrastructure.Models
     {
         public string PrimeiroNome { get; set; }
         public string UltimoNome { get; set; }
-        public string NomeDeUsuario { get; set; }
     }
 }
