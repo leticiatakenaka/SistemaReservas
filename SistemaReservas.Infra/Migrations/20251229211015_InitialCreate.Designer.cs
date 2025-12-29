@@ -12,8 +12,8 @@ using SistemaReservas.Infrastructure.Context;
 namespace SistemaReservas.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250607155817_InitialIdentity")]
-    partial class InitialIdentity
+    [Migration("20251229211015_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

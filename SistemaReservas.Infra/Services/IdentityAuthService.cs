@@ -1,22 +1,22 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using SistemaReservas.Application.DTOs;
+using SistemaReservas.Application.Interfaces;
 using SistemaReservas.Infrastructure.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using SistemaReservas.Application.DTOs;
-using SistemaReservas.Application.Interfaces;
 
 namespace SistemaReservas.Infrastructure.Services
 {
-    public class AuthAppService : IAuthAppService
+    public class IdentityAuthService : IAuthGateway
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IConfiguration _configuration;
 
-        public AuthAppService(UserManager<ApplicationUser> userManager,
+        public IdentityAuthService(UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IConfiguration configuration)
         {
@@ -25,7 +25,7 @@ namespace SistemaReservas.Infrastructure.Services
             _configuration = configuration;
         }
 
-        public async Task<string?> LoginAsync(string email, string password)
+        public async Task<string> Autenticar(string email, string password)
         {
             var user = await _userManager.FindByEmailAsync(email);
             if (user == null) return null;
@@ -36,17 +36,16 @@ namespace SistemaReservas.Infrastructure.Services
             return await GerarJwtTokenAsync(user);
         }
 
-        public async Task<OperationResultDto<string>> RegistrarAsync(RegistrarUsuarioRequest request)
+        public async Task<OperationResultDto<string>> Registrar(RegistrarUsuarioRequest request)
         {
             var user = new ApplicationUser
             {
-                UserName = request.Email,
+                UserName = request.NomeDeUsuario,
                 Email = request.Email,
                 PrimeiroNome = request.PrimeiroNome,
-                UltimoNome = request.UltimoNome,
-                NomeDeUsuario = request.NomeDeUsuario,
+                UltimoNome = request.UltimoNome
             };
-            
+
             try
             {
                 var result = await _userManager.CreateAsync(user, request.Password);
@@ -82,7 +81,7 @@ namespace SistemaReservas.Infrastructure.Services
                 _configuration["Jwt:Issuer"],
                 _configuration["Jwt:Audience"],
                 claims,
-                expires: DateTime.Now.AddHours(1),
+                expires: DateTime.UtcNow.AddHours(1),
                 signingCredentials: creds
             );
 

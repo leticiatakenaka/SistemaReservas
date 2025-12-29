@@ -7,7 +7,6 @@ using SistemaReservas.Domain.Interfaces;
 using SistemaReservas.Infrastructure.Context;
 using SistemaReservas.Infrastructure.Models;
 using SistemaReservas.Infrastructure.Repositories;
-using SistemaReservas.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
