@@ -12,8 +12,8 @@ using SistemaReservas.Infrastructure.Context;
 namespace SistemaReservas.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251229211015_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20251229231741_RemoveCampoDuplicado")]
+    partial class RemoveCampoDuplicado
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -229,10 +229,6 @@ namespace SistemaReservas.Infrastructure.Migrations
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NomeDeUsuario")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)

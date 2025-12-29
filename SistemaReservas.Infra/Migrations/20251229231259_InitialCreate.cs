@@ -62,7 +62,6 @@ namespace SistemaReservas.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     PrimeiroNome = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UltimoNome = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    NomeDeUsuario = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),

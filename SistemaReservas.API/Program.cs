@@ -7,6 +7,7 @@ using SistemaReservas.Domain.Interfaces;
 using SistemaReservas.Infrastructure.Context;
 using SistemaReservas.Infrastructure.Models;
 using SistemaReservas.Infrastructure.Repositories;
+using SistemaReservas.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,7 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<IUsuarioAppService, UsuarioAppService>(); 
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<IAuthAppService, AuthAppService>();
+builder.Services.AddScoped<IAuthGateway, IdentityAuthService>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

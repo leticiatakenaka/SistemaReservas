@@ -27,7 +27,7 @@ namespace SistemaReservas.API.Controllers
             return Ok(new { Token = token });
         }
 
-        [HttpPost("Registrar")]
+        [HttpPost("registrar")]
         public async Task<IActionResult> Registrar([FromBody] RegistrarUsuarioRequest request)
         {
             if (!ModelState.IsValid)
