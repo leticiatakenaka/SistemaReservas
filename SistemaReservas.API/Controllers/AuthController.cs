@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.Data;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using SistemaReservas.Application.DTOs;
 using SistemaReservas.Application.Interfaces;
@@ -7,7 +8,7 @@ namespace SistemaReservas.API.Controllers
 {
 
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/auth")]
     public class AuthController : Controller
     {
         private readonly IAuthAppService authAppService;
@@ -22,12 +23,17 @@ namespace SistemaReservas.API.Controllers
 
             var token = await authAppService.Login(login);
 
-            if (token == null) return Unauthorized("Email ou senha inválida");
+            if (token == null) return Unauthorized(new
+            {
+                success = false,
+                errors = "Email ou senha inválida."
+            });
 
             return Ok(new { Token = token });
         }
 
-        [HttpPost("Registrar")]
+        //[Authorize(Roles = "Admin")]
+        [HttpPost("registrar")]
         public async Task<IActionResult> Registrar([FromBody] RegistrarUsuarioRequest request)
         {
             if (!ModelState.IsValid)

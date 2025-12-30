@@ -9,12 +9,31 @@ namespace SistemaReservas.Domain.Entities
 {
     public class Usuario
     {
-        public Guid Id { get; set; }
-        public string PrimeiroNome { get; set; }
-        public string UltimoNome { get; set; }
-        public string NomeDeUsuario { get; set; }
-        public string Email { get; set; }
-        public int PerfilId { get; set; }
-        public DateTime CriadoEm { get; set; }
+        protected Usuario() { }
+
+        public Usuario(Guid? id, string nome, string email, bool ativo = true)
+        {
+            Id = id ?? Guid.NewGuid();
+            Nome = nome;
+            Email = email;
+            DataCadastro = DateTime.UtcNow;
+            Ativo = ativo;
+        }
+
+        public Usuario(Guid id, string nome, string email, bool ativo, DateTime dataCadastro)
+        {
+            Id = id;
+            Nome = nome;
+            Email = email;
+            Ativo = ativo;
+            DataCadastro = dataCadastro;
+        }
+
+        public Guid Id { get; private set; }
+        public string Nome { get; private set; }
+        public string Email { get; private set; }
+        public bool Ativo { get; private set; }
+        public DateTime DataCadastro { get; private set; }
     }
 }
+
