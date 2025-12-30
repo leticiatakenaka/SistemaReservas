@@ -13,34 +13,31 @@ namespace SistemaReservas.Infrastructure.Services
     public class IdentityAuthService : IAuthGateway
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IConfiguration _configuration;
 
         public IdentityAuthService(UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager,
             IConfiguration configuration)
         {
             _userManager = userManager;
-            _signInManager = signInManager;
             _configuration = configuration;
         }
 
         public async Task<string> Autenticar(string email, string password)
         {
             var user = await _userManager.FindByEmailAsync(email);
-            if (user == null) return null;
 
-            var result = await _signInManager.PasswordSignInAsync(user, password, false, false);
-            if (!result.Succeeded) return null;
+            if (user != null && await _userManager.CheckPasswordAsync(user, password))
+            {
+                return await GerarJwtTokenAsync(user);
+            }
 
-            return await GerarJwtTokenAsync(user);
+            return null;
         }
 
         public async Task<OperationResultDto<string>> Registrar(RegistrarUsuarioRequest request)
         {
             var user = new ApplicationUser
             (
-                request.Username,
                 request.PrimeiroNome,
                 request.UltimoNome,
                 request.Email
@@ -55,15 +52,17 @@ namespace SistemaReservas.Infrastructure.Services
                     var errors = result.Errors.Select(MapearIdentityErrorParaMensagem).ToList();
                     return OperationResultDto<string>.Fail(errors.ToArray());
                 }
+
+                {
+                    var token = await GerarJwtTokenAsync(user);
+                    return OperationResultDto<string>.Ok(token);
+                }
             }
             catch (Exception)
             {
                 var erro = "Erro inesperado.";
                 return OperationResultDto<string>.Fail(erro);
             }
-
-            var token = await GerarJwtTokenAsync(user);
-            return OperationResultDto<string>.Ok(token);
         }
 
         private async Task<string?> GerarJwtTokenAsync(ApplicationUser user)
@@ -73,6 +72,13 @@ namespace SistemaReservas.Infrastructure.Services
                 new(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new(ClaimTypes.Email, user.Email.ToString())
             };
+
+            var userRoles = await _userManager.GetRolesAsync(user);
+
+            foreach (var userRole in userRoles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, userRole));
+            }
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

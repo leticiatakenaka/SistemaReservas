@@ -16,8 +16,5 @@ namespace SistemaReservas.Application.DTOs
 
         [Required(ErrorMessage = "O campo Último Nome é obrigatório.")]
         public required string UltimoNome { get; set; }
-
-        [Required(ErrorMessage = "O campo Nome de Usuário é obrigatório.")]
-        public required string Username { get; set; }
     }
 }

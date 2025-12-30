@@ -6,11 +6,12 @@ namespace SistemaReservas.Infrastructure.Models
     {
         protected ApplicationUser() { }
 
-        public ApplicationUser(string userName, string primeiroNome, string ultimoNome, string email)
+        public ApplicationUser(string primeiroNome, string ultimoNome, string email)
         {
             Id = Guid.NewGuid();
-            UserName = userName;    
-            PrimeiroNome = primeiroNome; 
+            PrimeiroNome = primeiroNome;
+            Email = email;
+            UserName = email;
             UltimoNome = ultimoNome;     
             DataCadastro = DateTime.UtcNow;
             Ativo = true;
@@ -20,5 +21,27 @@ namespace SistemaReservas.Infrastructure.Models
         public string UltimoNome { get; private set; }
         public bool Ativo { get; private set; }
         public DateTime DataCadastro { get; private set; }
+
+        public void AtualizarDados(string primeiroNome, string ultimoNome, string email)
+        {
+            if (string.IsNullOrEmpty(primeiroNome)) throw new ArgumentNullException("Nome inválido");
+
+            PrimeiroNome = primeiroNome;
+            UltimoNome = ultimoNome;
+            Email = email;
+            UserName = email;
+            NormalizedEmail = email.ToUpper();
+            NormalizedUserName = email.ToUpper();
+        }
+
+        public void DesativoUsuario()
+        {
+            Ativo = false;
+        }
+
+        public void ativoUsuario()
+        {
+            Ativo = true;
+        }
     }
 }

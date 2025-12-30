@@ -11,13 +11,13 @@ namespace SistemaReservas.Domain.Entities
     {
         protected Usuario() { }
 
-        public Usuario(string nome, string email)
+        public Usuario(Guid? id, string nome, string email, bool ativo = true)
         {
-            Id = Guid.NewGuid();
+            Id = id ?? Guid.NewGuid();
             Nome = nome;
             Email = email;
             DataCadastro = DateTime.UtcNow;
-            Ativo = true;
+            Ativo = ativo;
         }
 
         public Usuario(Guid id, string nome, string email, bool ativo, DateTime dataCadastro)

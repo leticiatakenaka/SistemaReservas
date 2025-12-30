@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.Data;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using SistemaReservas.Application.DTOs;
 using SistemaReservas.Application.Interfaces;
@@ -31,6 +32,7 @@ namespace SistemaReservas.API.Controllers
             return Ok(new { Token = token });
         }
 
+        //[Authorize(Roles = "Admin")]
         [HttpPost("registrar")]
         public async Task<IActionResult> Registrar([FromBody] RegistrarUsuarioRequest request)
         {
