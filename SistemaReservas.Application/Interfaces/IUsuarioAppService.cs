@@ -1,14 +1,10 @@
-﻿using SistemaReservas.Application.DTOs;
+﻿using SistemaReservas.Domain.Common;
 using SistemaReservas.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SistemaReservas.Application.Interfaces
 {
     public interface IUsuarioAppService
     {
+        Task<PagedResult<Usuario>> ObterUsuariosAsync(int page, int pageSize, string termo, bool? ativo);
     }
 }

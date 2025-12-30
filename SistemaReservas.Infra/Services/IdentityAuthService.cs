@@ -39,16 +39,16 @@ namespace SistemaReservas.Infrastructure.Services
         public async Task<OperationResultDto<string>> Registrar(RegistrarUsuarioRequest request)
         {
             var user = new ApplicationUser
-            {
-                UserName = request.NomeDeUsuario,
-                Email = request.Email,
-                PrimeiroNome = request.PrimeiroNome,
-                UltimoNome = request.UltimoNome
-            };
+            (
+                request.Username,
+                request.PrimeiroNome,
+                request.UltimoNome,
+                request.Email
+            );
 
             try
             {
-                var result = await _userManager.CreateAsync(user, request.Password);
+                var result = await _userManager.CreateAsync(user, request.Senha);
 
                 if (!result.Succeeded)
                 {

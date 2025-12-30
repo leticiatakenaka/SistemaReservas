@@ -7,7 +7,7 @@ namespace SistemaReservas.API.Controllers
 {
 
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/auth")]
     public class AuthController : Controller
     {
         private readonly IAuthAppService authAppService;
@@ -22,7 +22,11 @@ namespace SistemaReservas.API.Controllers
 
             var token = await authAppService.Login(login);
 
-            if (token == null) return Unauthorized("Email ou senha inválida");
+            if (token == null) return Unauthorized(new
+            {
+                success = false,
+                errors = "Email ou senha inválida."
+            });
 
             return Ok(new { Token = token });
         }
