@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity.Data;
+﻿using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using SistemaReservas.Application.DTOs;
 using SistemaReservas.Application.Interfaces;
@@ -11,57 +10,35 @@ namespace SistemaReservas.API.Controllers
     [Route("api/auth")]
     public class AuthController : Controller
     {
-        private readonly IAuthAppService authAppService;
+        private readonly IAuthService _authService;
 
-        public AuthController(IAuthAppService authService)
-            => this.authAppService = authService;
+        public AuthController(IAuthService authService)
+            => _authService = authService;
 
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
             var login = new LoginDto { Email = request.Email, Senha = request.Password };
 
-            var token = await authAppService.Login(login);
+            var tokenString = await _authService.Login(login);
 
-            if (token == null) return Unauthorized(new
-            {
-                success = false,
-                errors = "Email ou senha inválida."
-            });
+            if (tokenString == null) return Unauthorized();
 
-            return Ok(new { Token = token });
+            return Ok(new { token = tokenString });
         }
 
-        //[Authorize(Roles = "Admin")]
-        [HttpPost("registrar")]
-        public async Task<IActionResult> Registrar([FromBody] RegistrarUsuarioRequest request)
+
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] RegisterUserRequest request)
         {
-            if (!ModelState.IsValid)
-            {
-                var errors = ModelState.Values
-                    .SelectMany(v => v.Errors)
-                    .Select(e => e.ErrorMessage)
-                    .ToList();
-
-                return BadRequest(new
-                {
-                    success = false,
-                    errors
-                });
-            }
-
-            var resultado = await authAppService.Registrar(request);
+            var resultado = await _authService.Register(request);
 
             if (!resultado.Success)
             {
-                return BadRequest(new
-                {
-                    success = false,
-                    errors = resultado.Errors
-                });
+                return BadRequest(new { errors = resultado.Errors });
             }
 
-            return Ok(new { success = true, token = resultado.Data });
+            return Ok(resultado.Data);
         }
     }
 }

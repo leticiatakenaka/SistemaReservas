@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SistemaReservas.Infrastructure.Mappgins
+namespace SistemaReservas.Domain.Enums
 {
-    public class UserMap
+    public enum UserType
     {
+        Host = 0,
+        Guest = 1
     }
 }
+

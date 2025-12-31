@@ -5,9 +5,10 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using SistemaReservas.Application.Interfaces;
 using SistemaReservas.Application.Services;
+using SistemaReservas.Domain.Entities;
 using SistemaReservas.Domain.Interfaces;
 using SistemaReservas.Infrastructure.Context;
-using SistemaReservas.Infrastructure.Models;
+using SistemaReservas.Infrastructure.Data;
 using SistemaReservas.Infrastructure.Repositories;
 using SistemaReservas.Infrastructure.Services;
 using System.Security.Claims;
@@ -58,10 +59,12 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 builder.Services.AddControllers();
 
-builder.Services.AddScoped<IUsuarioAppService, UsuarioAppService>();
-builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
-builder.Services.AddScoped<IAuthAppService, AuthAppService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IAuthGateway, IdentityAuthService>();
+builder.Services.AddScoped<IBookingService, BookingService>();
+builder.Services.AddScoped<IBookingRepository, BookingRepository>();
+builder.Services.AddScoped<IPropertyRepository, PropertyRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddEndpointsApiExplorer();
 
@@ -95,7 +98,37 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy =>
+                      {
+                          policy.WithOrigins("http://localhost:4200")
+                                .AllowAnyHeader()
+                                .AllowAnyMethod();
+                      });
+});
+
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var context = services.GetRequiredService<AppDbContext>();
+        var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+        var roleManager = services.GetRequiredService<RoleManager<ApplicationRole>>();
+
+        await DbInitializer.SeedData(context, userManager, roleManager);
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "Ocorreu um erro ao popular o banco de dados (Seed).");
+    }
+}
 
 if (app.Environment.IsDevelopment())
 {
@@ -104,6 +137,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(MyAllowSpecificOrigins);
 
 app.UseAuthentication(); 
 app.UseAuthorization();  

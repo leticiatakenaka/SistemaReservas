@@ -2,9 +2,9 @@
 
 namespace SistemaReservas.Application.Interfaces
 {
-    public interface IAuthGateway 
+    public interface IAuthService
     {
-        Task<string> Login(string email, string password);
+        Task<string?> Login(LoginDto dto);
         Task<OperationResultDto<string>> Register(RegisterUserRequest request);
     }
 }

@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using SistemaReservas.Application.DTOs;
 using SistemaReservas.Application.Interfaces;
-using SistemaReservas.Infrastructure.Models;
+using SistemaReservas.Domain.Entities;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -22,7 +22,7 @@ namespace SistemaReservas.Infrastructure.Services
             _configuration = configuration;
         }
 
-        public async Task<string> Autenticar(string email, string password)
+        public async Task<string> Login(string email, string password)
         {
             var user = await _userManager.FindByEmailAsync(email);
 
@@ -34,18 +34,19 @@ namespace SistemaReservas.Infrastructure.Services
             return null;
         }
 
-        public async Task<OperationResultDto<string>> Registrar(RegistrarUsuarioRequest request)
+        public async Task<OperationResultDto<string>> Register(RegisterUserRequest request)
         {
             var user = new ApplicationUser
             (
-                request.PrimeiroNome,
-                request.UltimoNome,
-                request.Email
+                request.FirstName,
+                request.LastName,
+                request.Email,
+                request.Type
             );
 
             try
             {
-                var result = await _userManager.CreateAsync(user, request.Senha);
+                var result = await _userManager.CreateAsync(user, request.Password);
 
                 if (!result.Succeeded)
                 {
